@@ -1,0 +1,121 @@
+<div class="task-list-container">
+    <h2>Minhas Tarefas</h2>
+
+    <div class="task-input-container">
+
+        <!-- 
+            <input type="text">: Caixa onde o usuário digita o título da tarefa.
+            
+            [(ngModel)]="novoTituloDaTarefa": Liga o que está escrito 
+            na caixa à variável novoTituloDaTarefa no código do componente. 
+            Tudo que o usuário digitar vai para essa variável automaticamente.
+
+            placeholder="Adicionar nova tarefa...": Texto de exemplo 
+            que aparece quando a caixa está vazia.
+
+            (keyup.enter)="adicionarTarefa()": Quando o usuário aperta Enter, 
+            a função adicionarTarefa() é chamada.
+
+            class="task-input": Aplica estilo à caixa de texto.
+        -->
+        <input 
+            type="text" 
+            [(ngModel)]="novoTituloDaTarefa" 
+            placeholder="Adicionar nova tarefa..." 
+            (keyup.enter)="adicionarTarefa()"
+            class="task-input">
+
+        <!-- 
+            <select>: Caixa de seleção (menu suspenso).
+            
+            [(ngModel)]="prioridadeSelecionada": O valor escolhido vai direto 
+            para a variável prioridadeSelecionada.
+
+            class="priority-select": Estilo visual do seletor.
+
+            Cada <option> é uma opção de prioridade: baixa, média ou alta.
+            O value será enviado para o código; o texto entre as tags é o que o usuário vê.
+        -->
+        <select [(ngModel)]="prioridadeSelecionada" class="priority-select">
+            <option value="baixa">Baixa</option>
+            <option value="media">Média</option>
+            <option value="alta">Alta</option>
+        </select>
+
+        <!-- 
+            (click)="adicionarTarefa()": Quando o botão for clicado, 
+            a função adicionarTarefa() é chamada.
+
+            class="add-btn": Estilo do botão.
+
+            [disabled]="!novoTituloDaTarefa.trim()": O botão fica desativado 
+            (sem clicar) se o campo de texto estiver vazio.
+
+            <i class="material-icons">add</i>: Ícone de "+" do Google Material Icons.
+        -->
+        <button 
+            (click)="adicionarTarefa()" 
+            class="add-btn" 
+            [disabled]="!novoTituloDaTarefa.trim()">
+                <i class="material-icons">add</i> Adicionar
+        </button>
+    </div>
+
+    <!-- 
+        *ngIf="...": Só mostra esse bloco se a condição for verdadeira.
+        Aqui, só será mostrado se não houver nenhuma tarefa (length === 0).
+        tarefas$ | async: Pede os dados de tarefas$ (que é um "stream") e 
+        espera a resposta (async).
+        ?.length: Verifica quantas tarefas tem.
+        class="empty-state": Estilo visual quando a lista está vazia.
+        Um ícone de círculo com check (✅).
+        E uma mensagem amigável para o usuário.
+    -->
+    <div *ngIf="(tarefas$ | async)?.length === 0" class="empty-state">
+        <i class="material-icons">check_circle</i>
+        <p>Nenhuma tarefa encontrada. Adicione uma nova tarefa!</p>
+    </div>
+
+    <!-- 
+        Um contêiner para mostrar todas as tarefas adicionadas.
+        *ngFor="let task of tarefas$ | async":
+        ngFor é uma forma de repetir o bloco para cada item da lista.
+        Aqui, para cada tarefa que vier da variável tarefas$, será criado um 
+        componente visual chamado <app-item-de-tarefas>.
+
+        [task]="task": Envia os dados da tarefa atual para o componente que vai exibi-la.
+
+        (toggleComplete), (remove), (edit):
+        Esses são eventos que o componente app-item-de-tarefas pode emitir.
+        Cada um chama uma função no componente principal:
+        alternarConclusaoDeTarefa($event) → marca ou desmarca como feita.
+        removerTarefas($event) → apaga a tarefa.
+        atualizarTarefa($event.id, $event.titulo) → atualiza o nome.
+    -->
+    <div class="tasks-container">
+        <app-item-de-tarefas 
+            *ngFor="let task of tarefas$ | async" 
+            [tarefa]="task" 
+            (alternarCompleto)="alternarConclusaoDeTarefa($event)"
+            (remover)="removerTarefas($event)" 
+            (editar)="atualizarTarefa($event.id, $event.titulo)">
+        </app-item-de-tarefas>
+    </div>
+
+    <!-- 
+        Contador de tarefas feitas
+        Um contêiner de estatísticas.
+        Só aparece se houver alguma tarefa (length maior que 0).
+        class="stats": Nome para aplicar estilo.
+        Mostra um texto como:
+        2 de 5 tarefas concluídas
+
+        { ... }}: Interpolação – insere o valor diretamente no HTML.
+        (contagemDeTarefasConcluidas$ | async): Número de tarefas feitas.
+        (contagemTotalDeTarefas$ | async): Número total de tarefas.
+
+    -->
+    <div class="stats" *ngIf="(tarefas$ | async)?.length">
+        <span>{{ (contagemDeTarefasConcluidas$ | async) }} de {{ (contagemTotalDeTarefas$ | async) }} tarefas concluídas</span>
+    </div>
+</div>

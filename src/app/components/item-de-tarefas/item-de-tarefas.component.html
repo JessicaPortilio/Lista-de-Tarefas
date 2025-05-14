@@ -1,0 +1,92 @@
+<!-- 
+    [class.completed]="...": Se a tarefa estiver concluída, adiciona a classe CSS completed. 
+    [class.high-priority]="...": Se a prioridade for 'alta', aplica a classe CSS 
+    high-priority para destacar essa urgência.
+-->
+<div class="task-item" 
+    [class.completed]="tarefa.concluida" 
+    [class.high-priority]="tarefa.prioridade === 'alta'">
+    
+    <div class="task-content">
+        <!-- 
+            type="checkbox": define que é uma caixinha que pode ser marcada ou desmarcada.
+            [checked]="tarefa.concluida": se tarefa.concluida for true, a caixinha aparece marcada.
+            (change)="alternarCompleto.emit(tarefa.id)": Quando o usuário marca ou 
+            desmarca, o componente avisa o sistema que o estado da tarefa mudou.
+            class="task-checkbox": estilo da caixinha.
+        -->
+        <input 
+            type="checkbox" 
+            [checked]="tarefa.concluida" 
+            (change)="alternarCompleto.emit(tarefa.id)" 
+            class="task-checkbox">
+
+
+        <!-- 
+            *ngIf="!estaEditando": Mostra esse bloco somente se não estiver editando.
+            class="task-title": estilo do título.
+            (dblclick)="comecarEditar()": Se o usuário der dois cliques, entra no modo de edição.
+            {{ tarefa.titulo }}: Exibe o texto da tarefa.
+            -->
+        <div *ngIf="!estaEditando" class="task-title" (dblclick)="comecarEditar()">
+            {{ tarefa.titulo }}
+
+            <!-- 
+                [class]="'prioridade-' + tarefa.prioridade": Gera uma classe CSS 
+                como prioridade-baixa, prioridade-media ou prioridade-alta, 
+                para mudar cor conforme a prioridade.
+            -->
+            <span class="task-priority" [class]="'prioridade-' + tarefa.prioridade">
+                <!-- Exibe o texto: baixa, média ou alta. -->
+                {{ tarefa.prioridade }}
+            </span>
+            <!-- 
+                {{ tarefa.criadoEm | date:'shortDate' }}: Mostra a data de criação formatada (ex: 13/05/2025).
+                | date:'shortDate': É um filtro Angular (pipe) que converte datas para formato curto.
+                -->
+            <span class="task-date">{{ tarefa.criadoEm | date:'shortDate' }}</span>
+        </div>
+
+        <!-- 
+            *ngIf="estaEditando": Só aparece quando está em modo de edição.
+            type="text": Campo de texto para digitar.
+            [(ngModel)]="tituloEditado": Faz ligação entre o texto digitado e 
+            a variável tituloEditado.
+            (keyup.enter)="salvarEdicao()": Se apertar Enter, a edição é salva.
+            (blur)="salvarEdicao()": Se clicar fora do campo, também salva.
+            (keyup.escape)="cancelarEdicao()": Se apertar Esc, cancela a edição.
+            class="task-edit-input": estilo do campo de edição.
+            autofocus: já deixa o campo pronto para digitar.
+        -->
+        <input 
+            *ngIf="estaEditando" 
+            type="text" 
+            [(ngModel)]="tituloEditado" 
+            (keyup.enter)="salvarEdicao()" 
+            (blur)="salvarEdicao()"
+            (keyup.escape)="cancelarEdicao()" 
+            class="task-edit-input" 
+            autofocus>
+    </div>
+
+    <div class="task-actions">
+        <!-- 
+            *ngIf="!estaEditando": Só mostra o botão se não estiver editando.
+            (click)="comecarEditar()": Ao clicar, ativa o modo edição.
+            class="edit-btn": estilo do botão.
+        -->
+        <button (click)="comecarEditar()" *ngIf="!estaEditando" class="edit-btn">
+            <!-- Ícone de lápis (ícone do Google Material Icons). -->
+            <i class="material-icons">edit</i>
+        </button>
+        <!-- 
+            (click)="remover.emit(tarefa.id)": Ao clicar, envia um aviso para remover essa tarefa específica.
+            class="remove-btn": estilo do botão.
+
+        -->
+        <button (click)="remover.emit(tarefa.id)" class="remove-btn">
+            <!-- Ícone de lixeira. -->
+            <i class="material-icons">delete</i>
+        </button>
+    </div>
+</div>

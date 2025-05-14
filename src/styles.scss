@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+/* Import Material Icons */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #8ca392;
+    color: #8ca392;
+    padding: 20px;
+}
+
+.material-icons {
+    font-size: 18px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .task-input-container {
+        flex-direction: column;
+
+        .priority-select,
+        .add-btn {
+            width: 100%;
+        }
+    }
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
