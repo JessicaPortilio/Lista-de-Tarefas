@@ -1,59 +1,54 @@
-# ListaDeTarefas
+# 📝 Projeto Lista de Tarefas com Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+Este é um projeto de **lista de tarefas interativa** desenvolvido com **Angular**, permitindo que os usuários adicionem, editem, concluam e removam tarefas com diferentes níveis de prioridade. Ele também exibe a data de criação e fornece uma interface simples e intuitiva para gerenciamento de afazeres.
 
-## Development server
+## 🚀 Funcionalidades
 
-To start a local development server, run:
+- ✅ Marcar tarefa como concluída
+- ✏️ Editar o título de uma tarefa
+- 🗑️ Remover uma tarefa
+- 🔴 Definir prioridade (baixa, média, alta)
+- 📅 Exibir data de criação da tarefa
+- 👀 Alternar entre modo de leitura e modo de edição com duplo clique
+- ⌨️ Atalhos de teclado (Enter para salvar, Esc para cancelar)
 
-```bash
-ng serve
-```
+## 🖼️ Interface
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+A interface foi criada para ser responsiva e fácil de usar. Cada item da lista exibe:
 
-## Code scaffolding
+- Caixa de seleção para marcar como feito
+- Título com opção de edição ao dar duplo clique
+- Indicador visual de prioridade
+- Data da criação formatada
+- Ícones de edição e exclusão
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 💻 Tecnologias Utilizadas
 
-```bash
-ng generate component component-name
-```
+- [Angular](https://angular.io/)
+- TypeScript
+- HTML5
+- CSS3
+- Material Icons (Google)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🔧 Como Executar o Projeto
 
-```bash
-ng generate --help
-```
+1. **Clone o repositório**:
+   ```bash
+   git clone https://github.com/JessicaPortilio/Lista-de-Tarefas.git
+   cd lista-de-tarefas-angular
+   ```
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+2. **Instale as dependências**:
+   ```bash
+   npm install
+   ```
+3. **Execute o projeto**:
+   ```bash
+   ng serve
+   ```
+4. **Acesse no navegador**:
+   ```bash
+   http://localhost:4200
+   ```
+📌 Observações
+O projeto ainda pode ser expandido com funcionalidades como filtros por prioridade, armazenamento local, integração com back-end, autenticação, entre outros.
